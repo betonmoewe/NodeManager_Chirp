@@ -14,7 +14,7 @@
 
 // General settings
 #define MY_BAUD_RATE 9600
-#define MY_DEBUG
+//#define MY_DEBUG
 //#define MY_NODE_ID 100
 //#define MY_SMART_SLEEP_WAIT_DURATION_MS 500
 
@@ -111,7 +111,7 @@
 #define DEBUG 1
 
 // if enabled, enable the capability to power on sensors with the arduino's pins to save battery while sleeping
-#define POWER_MANAGER 0
+#define POWER_MANAGER 1
 // if enabled, will load the battery manager library to allow the battery level to be reported automatically or on demand
 #define BATTERY_MANAGER 1
 // if enabled, allow modifying the configuration remotely by interacting with the configuration child id
@@ -126,11 +126,11 @@
 #define SERVICE_MESSAGES 0
 
 // Enable this module to use one of the following sensors: SENSOR_ANALOG_INPUT, SENSOR_LDR, SENSOR_THERMISTOR, SENSOR_ML8511, SENSOR_ACS712, SENSOR_RAIN, SENSOR_SOIL_MOISTURE
-#define MODULE_ANALOG_INPUT 0
+#define MODULE_ANALOG_INPUT 1
 // Enable this module to use one of the following sensors: SENSOR_DIGITAL_INPUT
-#define MODULE_DIGITAL_INPUT 0
+#define MODULE_DIGITAL_INPUT 1
 // Enable this module to use one of the following sensors: SENSOR_DIGITAL_OUTPUT, SENSOR_RELAY, SENSOR_LATCHING_RELAY
-#define MODULE_DIGITAL_OUTPUT 0
+#define MODULE_DIGITAL_OUTPUT 1
 // Enable this module to use one of the following sensors: SENSOR_DHT11, SENSOR_DHT22, SENSOR_DHT21
 #define MODULE_DHT 0
 // Enable this module to use one of the following sensors: SENSOR_SHT21

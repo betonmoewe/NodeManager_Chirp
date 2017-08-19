@@ -2,7 +2,7 @@
  * NodeManager
  */
 
-#include "NodeManager.h"
+#include "NodeManager_mod.h"
 
 /***************************************
    PowerManager
@@ -389,7 +389,7 @@ void Sensor::loop(const MyMessage & message) {
       // we've been called from receive(), pass the message along
       onReceive(message);
     }
-    else {
+   else {
       // we'be been called from loop()
       onLoop();
     }
@@ -3097,6 +3097,8 @@ void SensorCHIRP::onLoop() {
   if (_sensor_type == SensorCHIRP::CAPACITANCE) {
     // request the SoilMoisturelevel
     float capacitance = _chirp->getCapacitance();
+    while (_chirp->isBusy()) delay(50);
+    capacitance = _chirp->getCapacitance();
     float capacitance_orig = capacitance;
     float cap_offsetfree = capacitance - _chirp_moistureoffset;
     if (cap_offsetfree < 0) { cap_offsetfree = 0; }
@@ -3154,12 +3156,13 @@ void SensorCHIRP::onLoop() {
   }
   if (_chirp_version >= 0x23 ) {
     _chirp->sleep();
+    ;
   }
 }
 
 // what do to as the main task when receiving a message
 void SensorCHIRP::onReceive(const MyMessage & message) {
-  onLoop();
+  if (message.getCommand() == C_REQ) onLoop();
 }
 
 // what to do when receiving a remote message
@@ -3748,7 +3751,7 @@ void NodeManager::loop() {
   // run loop for all the registered sensors
   for (int i = 1; i <= MAX_SENSORS; i++) {
     // skip unconfigured sensors
-    if (_sensors[i] == 0) continue;
+    if (_sensors[i] == 0) continue; 
     if (_last_interrupt_pin != -1 && _sensors[i]->getInterruptPin() == _last_interrupt_pin) {
       // if there was an interrupt for this sensor, call the sensor's interrupt() and then loop()
       _sensors[i]->interrupt();
