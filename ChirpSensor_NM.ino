@@ -50,13 +50,27 @@ void before() {
   */
   nodeManager.setBatteryMin(1.8);
   nodeManager.setBatteryMax(3.2);
-  nodeManager.setSleepMinutes(10);
-  nodeManager.setReportIntervalMinutes(60);
-  SensorCHIRP* myCHIRP = (SensorCHIRP*)nodeManager.getSensor(nodeManager.registerSensor(SENSOR_CHIRP)); 
-  myCHIRP->setMoistureOffset(M_OFFSET);
-  myCHIRP->setMoistureRange(M_RANGE);
-  myCHIRP->setReturnMoistureNormalized(true); 
-  myCHIRP->setReturnLightReversed(true);
+  nodeManager.setSleepMinutes(2);
+  nodeManager.setReportIntervalMinutes(2);
+  
+  //SensorCHIRP* myCHIRP = (SensorCHIRP*)nodeManager.getSensor(nodeManager.registerSensor(SENSOR_CHIRP)); 
+  int myCHIRPid = nodeManager.registerSensor(SENSOR_CHIRP);
+  SensorCHIRP* myCHIRPmoisture = (SensorCHIRP*)nodeManager.getSensor((myCHIRPid - 2));
+  SensorCHIRP* myCHIRPtemperature = (SensorCHIRP*)nodeManager.getSensor((myCHIRPid - 1));
+  SensorCHIRP* myCHIRPlight = (SensorCHIRP*)nodeManager.getSensor(myCHIRPid);
+
+  myCHIRPmoisture->setTrackLastValue(true);
+  myCHIRPtemperature->setTrackLastValue(true);
+  myCHIRPlight->setTrackLastValue(true);  
+  myCHIRPmoisture->setForceUpdateMinutes(15);
+  myCHIRPtemperature->setForceUpdateMinutes(15);
+  myCHIRPlight->setForceUpdateMinutes(15);
+    
+  myCHIRPmoisture->setMoistureOffset(M_OFFSET);
+  myCHIRPmoisture->setMoistureRange(M_RANGE);
+  myCHIRPmoisture->setReturnMoistureNormalized(true); 
+  myCHIRPmoisture->setReturnLightReversed(true);
+
   /*
    * Register above your sensors
   */
